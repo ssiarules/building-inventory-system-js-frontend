@@ -22,7 +22,6 @@ class Buildings {
         const value = this.newBuildingName.value
 
         this.adapter.createBuilding(value).then(building => {
-
             this.buildings.push(new Building(building)) // pushing to the building array and creating a new instance of that building, so we are adding the building object to the array that already has the exiting buildings from the server.  
             this.render() // rerender our page to add the new building on to the exiting list of buildings
             this.newBuildingName.value = ' ' // clear out particular input 
@@ -34,7 +33,8 @@ class Buildings {
         console.log('double clicked')
         console.log(e.target)
         const li = e.target
-        li.contentEditable = true // when set to true allows user to edit the content on the page
+        li.contentEditable = true // when set to true allows user to edit the content on the DOM
+        li.classList.add('editable')
     }
 
     fetchAndLoadBuildings() {
