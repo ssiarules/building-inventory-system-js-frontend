@@ -12,9 +12,7 @@ class Buildings {
         this.newBuildingName = document.getElementById('new-building-name')
         this.buildingForm = document.getElementById('new-building-form')
         this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
-        this.buildingsContainer.addEventListener('dblclick', function() {
-            console.log('double clicked')
-        })
+        this.buildingsContainer.addEventListener('dblclick', this.handleBuildingClick.bind(this))
     }
 
     createBuilding(e) {
@@ -30,6 +28,13 @@ class Buildings {
             this.newBuildingName.value = ' ' // clear out particular input 
             console.log(building)
         })
+    }
+
+    handleBuildingClick(e) {
+        console.log('double clicked')
+        console.log(e.target)
+        const li = e.target
+        li.contentEditable = true // when set to true allows user to edit the content on the page
     }
 
     fetchAndLoadBuildings() {
@@ -49,7 +54,7 @@ class Buildings {
         // const buildingArray = this.buildings.map(building => `<li>${building.name}</li>`).join('')
         // console.log(buildingsArray)
         console.log('rendering is working ')
-            // this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
+        this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
         this.buildingsContainer.innerHTML = 'LIST OF BUILDINGS'
     }
 }
