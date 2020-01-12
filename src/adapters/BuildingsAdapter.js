@@ -2,12 +2,25 @@
 
 class BuildingsAdapter {
     constructor() {
-        this.baseUrl =
-            'http://localhost:3000/api/v1/buildings'
+        this.baseUrl = 'http://localhost:3000/api/v1/buildings'
     }
 
     // make a fetch request to baseUrl then when we get that response we will parse the json
     getBuildings() {
         return fetch(this.baseUrl).then(res => res.json())
+    }
+
+    createBuilding(value) {
+        const building = {
+            name: value
+        }
+
+        return fetch(this.baseUrl, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ building })
+        }).then(res => res.json())
     }
 }

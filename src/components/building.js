@@ -3,4 +3,8 @@ class Building {
         this.id = buildingJSON.id
         this.name = buildingJSON.name
     }
+
+    renderLi() {
+        return `<li>${this.name}</li>`
+    }
 }
