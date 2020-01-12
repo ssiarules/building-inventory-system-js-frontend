@@ -7,18 +7,23 @@ class Buildings {
     }
 
     fetchAndLoadBuildings() {
-        this.adapter.getBuildings().then(buildings => {
+        this.adapter
+            .getBuildings()
+            .then(buildings => {
+                // iterate over each building & push each object into this buildings
+                buildings.forEach(building => this.buildings.push(new Building(building)))
                 console.log(buildings)
             })
             .then(() => {
-                // iterate over each building & push each object into this buildings
-                this.buildings.forEach(building => this.buildings.push(building))
+                this.render()
             })
     }
 
     render() {
+        const buildingArray = this.buildings.map(building => `<li>${building.name}</li>`).join('')
+        console.log(buildingsArray)
         console.log('rendering is working ')
         const buildingsContainer = document.getElementById('buildings-container')
-        buildingsContainer.innerHTML = 'My Buildings goes here'
+        buildingsContainer.innerHTML = this.buildings.map(building => `<li>${building.name}</li>`).join('')
     }
 }
