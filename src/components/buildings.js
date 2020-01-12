@@ -12,6 +12,9 @@ class Buildings {
         this.newBuildingName = document.getElementById('new-building-name')
         this.buildingForm = document.getElementById('new-building-form')
         this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
+        this.buildingsContainer.addEventListener('dblclick', function() {
+            console.log('double clicked')
+        })
     }
 
     createBuilding(e) {
@@ -46,6 +49,7 @@ class Buildings {
         // const buildingArray = this.buildings.map(building => `<li>${building.name}</li>`).join('')
         // console.log(buildingsArray)
         console.log('rendering is working ')
-        this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
+            // this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
+        this.buildingsContainer.innerHTML = 'LIST OF BUILDINGS'
     }
 }
