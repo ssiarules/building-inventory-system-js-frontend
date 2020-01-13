@@ -2,12 +2,12 @@ class Buildings {
     constructor() {
         this.buildings = []
         this.adapter = new BuildingsAdapter()
-        this.BindingsAndEventListeners()
+        this.bindingsAndEventListeners()
         this.fetchAndLoadBuildings()
     }
 
     //
-    BindingsAndEventListeners() {
+    bindingsAndEventListeners() {
         this.buildingsContainer = document.getElementById('buildings-container')
         this.body = document.querySelector('body')
         this.newBuildingName = document.getElementById('new-building-name')
@@ -60,9 +60,9 @@ class Buildings {
         this.adapter
             .getBuildings()
             .then(buildings => {
+                // debugger
                 // iterate over each building & push each object into this buildings
-                this.buildings.forEach(building => this.buildings.push(new Building(building)))
-                console.log(buildings)
+                buildings.forEach(building => this.buildings.push(new Building(building)))
             })
             .then(() => {
                 this.render()
@@ -72,8 +72,8 @@ class Buildings {
     render() {
         // const buildingArray = this.buildings.map(building => `<li>${building.name}</li>`).join('')
         // console.log(buildingsArray)
-        console.log('rendering is working ')
+
         this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
-        this.buildingsContainer.innerHTML = 'LIST OF BUILDINGS'
+            // this.buildingsContainer.innerHTML = 'LIST OF BUILDINGS'
     }
 }
