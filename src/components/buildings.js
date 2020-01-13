@@ -33,6 +33,10 @@ class Buildings {
     }
 
     handleBuildingClick(e) {
+        this.toggleBuilding(e)
+    }
+
+    toggleBuilding(e) {
         console.log('double clicked')
         console.log(e.target)
         const li = e.target
@@ -45,7 +49,11 @@ class Buildings {
         const li = e.target
         li.contentEditable = false
         li.classList.remove('editable')
+        const newValue = li.innerHTML
+        const id = li.dataset.id
+        this.adapter.updateBuilding(newValue, id)
         console.log('update building')
+        console.log(li.innerHTML, id)
     }
 
     fetchAndLoadBuildings() {

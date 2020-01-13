@@ -23,4 +23,18 @@ class BuildingsAdapter {
             body: JSON.stringify({ building })
         }).then(res => res.json())
     }
+
+    updateBuilding(value, id) {
+        const building = {
+            name: value
+        }
+        return fetch(`${this.baseUrl}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ building })
+        }).then(res => res.json())
+    }
+
 }
