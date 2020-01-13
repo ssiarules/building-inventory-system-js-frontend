@@ -2,17 +2,20 @@ class Buildings {
     constructor() {
         this.buildings = []
         this.adapter = new BuildingsAdapter()
-        this.initiBindingsAndEventListeners()
+        this.BindingsAndEventListeners()
         this.fetchAndLoadBuildings()
     }
 
     //
-    initiBindingsAndEventListeners() {
+    BindingsAndEventListeners() {
         this.buildingsContainer = document.getElementById('buildings-container')
+        this.body = document.querySelector('body')
         this.newBuildingName = document.getElementById('new-building-name')
         this.buildingForm = document.getElementById('new-building-form')
         this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
         this.buildingsContainer.addEventListener('dblclick', this.handleBuildingClick.bind(this))
+            // this.body.addEventListener('blur', this.updatedBuilding.bind(this), true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
+        this.body.addEventListener('blur', this.updatedBuilding, true)
     }
 
     createBuilding(e) {
@@ -33,8 +36,16 @@ class Buildings {
         console.log('double clicked')
         console.log(e.target)
         const li = e.target
+        li.focus()
         li.contentEditable = true // when set to true allows user to edit the content on the DOM
-        li.classList.add('editable')
+        li.classList.add('editable') // when double clicked will add padding to the content you are editing. 
+    }
+
+    updateBuilding() {
+        const li = e.target
+        li.contentEditable = false
+        li.classList.remove('editable')
+        console.log('update building')
     }
 
     fetchAndLoadBuildings() {
