@@ -1,6 +1,6 @@
 class App {
     constructor() {
         this.buildings = new Buildings()
-        this.products = new Products()
+            // this.products = new Products()
     }
 }

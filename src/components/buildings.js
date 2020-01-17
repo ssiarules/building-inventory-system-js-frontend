@@ -10,18 +10,16 @@ class Buildings {
 
     bindingsAndEventListeners() {
         this.buildingsContainer = document.getElementById('buildings-container')
+        this.productsContainer = document.getElementById('products-container')
         this.body = document.querySelector('body')
         this.div = document.querySelector('div#buildings-content')
         this.newBuildingName = document.getElementById('new-building-name')
         this.buildingForm = document.getElementById('new-building-form')
-        this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
-            // this.buildingsContainer.addEventListener('click', this.handleBuildingClick.bind(this))
-            // this.body.addEventListener('blur', this.updatedBuilding, true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
-            // debugger
-            // this.div.addEventListener('dblclick', this.updateBuilding.bind(this))
-            // this.body.addEventListener('click', this.getBuildingProducts)
-            // this.buildingsContainer.addEventListener('click', this.handleBuildingProductsClick.bind(this))
-        this.buildingsContainer.addEventListener('click', this.getBuildingProducts.bind(this))
+        this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class  
+        this.buildingsContainer.addEventListener('click', this.handleBuildingClick.bind(this))
+        this.div.addEventListener('blur', this.updateBuilding.bind(this), true)
+        this.buildingsContainer.addEventListener('dblclick', this.handleBuildingProductsClick.bind(this))
+            // this.div.addEventListener('dblclick', this.getBuildingProducts.bind(this))
     }
 
     createBuilding(e) {
@@ -65,43 +63,57 @@ class Buildings {
     }
 
     handleBuildingProductsClick(e) {
-        this.toggleBuildingProducts(e)
-    }
 
-    toggleBuildingProducts(e) {
-        console.log('single clicked')
+        // this.toggleBuildingProducts(e)
+        console.log('building products')
         console.log(e.target)
-        const li = e.target
-        li.focus()
-        li.classList.add('editable') // when double clicked will add padding to the content you are editing. 
-    }
-
-    getBuildingProducts(e) {
         if (e.target.tagName === 'LI') {
-            const li = e.target
-            const id = li.dataset.id
-            this.fetchAndLoadProducts(id)
-                // li.innerHTML = this.products
-            li.append(this.products)
-            console.log(' Building Products')
-                // debugger
+            const buildingID = e.target.dataset.id
+            this.adapter.getBuildingProducts(buildingID)
+                .then(obj => {
+                    // debugger
+                    this.products = obj.map(productObj => new Product(productObj))
+                    this.renderProducts()
+                })
         }
-        // li.contentEditable = false
-        // li.classList.remove('editable')
-
     }
 
-    fetchAndLoadProducts(id) {
-        this.adapter
-            .getBuildingProducts(id)
-            .then(products => {
-                // iterate over each building & push each object into this buildings
-                this.products.forEach(product => this.products.push(new Product(product)))
-            })
-            .then(() => {
-                this.render()
-            })
-    }
+    // toggleBuildingProducts(e) {
+    //     console.log('Building-products')
+    //     if (e.target.tagName === 'LI') {
+    //         const buildingID = e.target.dataset.id
+    //         this.adapter.getBuildingProducts(buildingID)
+    //             .then(obj => {
+    //                 this.products = obj.map(productObj => new Product(productObj))
+    //                 this.renderProducts()
+    //             })
+    //     }
+    // }
+
+    // getBuildingProducts(e) {
+    //     if (e.target.tagName === 'LI') {
+    //         const li = e.target
+    //         const id = li.dataset.id
+    //         this.fetchAndLoadProducts(id)
+    //             // li.innerHTML = this.products
+    //         li.append(this.products)
+    //         console.log(' Building Products')
+    //             // debugger
+    //     }
+    // }
+
+    // fetchAndLoadProducts(building_id) {
+    //     // debugger
+    //     this.adapter
+    //         .getBuildingProducts(building_id)
+    //         .then(products => {
+    //             // iterate over each building & push each object into this buildings
+    //             this.products.forEach(product => this.products.push(new Product(product)))
+    //         })
+    //         .then(() => {
+    //             this.render()
+    //         })
+    // }
 
     fetchAndLoadBuildings() {
         this.adapter
@@ -115,11 +127,13 @@ class Buildings {
             })
     }
 
-    // Get Products
-    // const productObj = await 
-    // this.adapter.getProducts()
-
     render() {
         this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
     }
+
+    renderProducts() {
+        this.productsContainer.innerHTML = this.products.map(product => product.renderLi()).join('')
+    }
+
+    // innerHTML
 }

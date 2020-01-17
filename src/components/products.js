@@ -14,7 +14,7 @@ class Products {
         this.productForm.addEventListener('submit', this.createProduct.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
         this.productsContainer.addEventListener('dblclick', this.handleProductClick.bind(this))
 
-        // this.body.addEventListener('blur', this.updatedBuilding.bind(this), true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
+        this.body.addEventListener('blur', this.updatedBuilding.bind(this), true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
         this.body.addEventListener('blur', this.updatedProduct, true)
     }
 

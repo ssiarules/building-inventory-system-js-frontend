@@ -1,5 +1,5 @@
 class Product {
-    constructor(ProductJSON) {
+    constructor(productJSON) {
         this.id = productJSON.id
         this.name = productJSON.name
         this.category = productJSON.category
@@ -8,6 +8,7 @@ class Product {
     }
 
     renderLi() {
-        return `<li data-id=${this.building_id}>${this.name},${this.category},${this.description}</li>`
-    }
+            return `<li data-id=${this.building_id}>${this.name}</li>`
+        }
+        // ${this.category},${this.description}
 }
