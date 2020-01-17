@@ -1,21 +1,27 @@
 class Buildings {
     constructor() {
         this.buildings = []
+        this.products = []
         this.adapter = new BuildingsAdapter()
         this.bindingsAndEventListeners()
         this.fetchAndLoadBuildings()
+            // this.fetchAndLoadProducts()
     }
 
-    //
     bindingsAndEventListeners() {
         this.buildingsContainer = document.getElementById('buildings-container')
         this.body = document.querySelector('body')
+        this.div = document.querySelector('div#buildings-content')
         this.newBuildingName = document.getElementById('new-building-name')
         this.buildingForm = document.getElementById('new-building-form')
         this.buildingForm.addEventListener('submit', this.createBuilding.bind(this)) // binding this to Buildings when we execute createBuilding otherwise this inside createBuilding will be the form and not the Buildings class 
-        this.buildingsContainer.addEventListener('dblclick', this.handleBuildingClick.bind(this))
-            // this.body.addEventListener('blur', this.updatedBuilding.bind(this), true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
-        this.body.addEventListener('blur', this.updatedBuilding, true)
+            // this.buildingsContainer.addEventListener('click', this.handleBuildingClick.bind(this))
+            // this.body.addEventListener('blur', this.updatedBuilding, true) // selected a parent to add a listener to blur & true so any children of that body we're going to listen for on blur 
+            // debugger
+            // this.div.addEventListener('dblclick', this.updateBuilding.bind(this))
+            // this.body.addEventListener('click', this.getBuildingProducts)
+            // this.buildingsContainer.addEventListener('click', this.handleBuildingProductsClick.bind(this))
+        this.buildingsContainer.addEventListener('click', this.getBuildingProducts.bind(this))
     }
 
     createBuilding(e) {
@@ -45,22 +51,62 @@ class Buildings {
         li.classList.add('editable') // when double clicked will add padding to the content you are editing. 
     }
 
-    updateBuilding() {
+    updateBuilding(e) {
+        // debugger
+        console.log('update building')
         const li = e.target
         li.contentEditable = false
         li.classList.remove('editable')
         const newValue = li.innerHTML
         const id = li.dataset.id
         this.adapter.updateBuilding(newValue, id)
-        console.log('update building')
+
         console.log(li.innerHTML, id)
+    }
+
+    handleBuildingProductsClick(e) {
+        this.toggleBuildingProducts(e)
+    }
+
+    toggleBuildingProducts(e) {
+        console.log('single clicked')
+        console.log(e.target)
+        const li = e.target
+        li.focus()
+        li.classList.add('editable') // when double clicked will add padding to the content you are editing. 
+    }
+
+    getBuildingProducts(e) {
+        if (e.target.tagName === 'LI') {
+            const li = e.target
+            const id = li.dataset.id
+            this.fetchAndLoadProducts(id)
+                // li.innerHTML = this.products
+            li.append(this.products)
+            console.log(' Building Products')
+                // debugger
+        }
+        // li.contentEditable = false
+        // li.classList.remove('editable')
+
+    }
+
+    fetchAndLoadProducts(id) {
+        this.adapter
+            .getBuildingProducts(id)
+            .then(products => {
+                // iterate over each building & push each object into this buildings
+                this.products.forEach(product => this.products.push(new Product(product)))
+            })
+            .then(() => {
+                this.render()
+            })
     }
 
     fetchAndLoadBuildings() {
         this.adapter
             .getBuildings()
             .then(buildings => {
-                // debugger
                 // iterate over each building & push each object into this buildings
                 buildings.forEach(building => this.buildings.push(new Building(building)))
             })
@@ -69,11 +115,11 @@ class Buildings {
             })
     }
 
-    render() {
-        // const buildingArray = this.buildings.map(building => `<li>${building.name}</li>`).join('')
-        // console.log(buildingsArray)
+    // Get Products
+    // const productObj = await 
+    // this.adapter.getProducts()
 
+    render() {
         this.buildingsContainer.innerHTML = this.buildings.map(building => building.renderLi()).join('')
-            // this.buildingsContainer.innerHTML = 'LIST OF BUILDINGS'
     }
 }

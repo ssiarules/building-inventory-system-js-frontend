@@ -36,5 +36,9 @@ class BuildingsAdapter {
             body: JSON.stringify({ building })
         }).then(res => res.json())
     }
+    getBuildingProducts(building_id) {
+        // return fetch(`http://localhost:3000/api/v1/buildings/${building_id}/products`).then(res => res.json())
+        return fetch(`${this.baseUrl}/${building_id}/products`).then(res => res.json())
+    }
 
 }

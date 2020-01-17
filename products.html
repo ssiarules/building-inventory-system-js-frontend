@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <title>Building Inventory System</title>
+</head>
+
+<body>
+    <div class="tab">
+        <button class="tablinks">Home</button>
+        <button class="tablinks">Buildings</button>
+        <button class="tablinks"><a href="products.html"></a> Products</button>
+
+    </div>
+    <div class="container">
+        <h1> Create Product</h1>
+        <div id="new-product-container">
+            <form id="new-product-form">
+                Name: <input type="text" name="product-name" id="new-product-name" />
+                <br> Category: <input type="text" name="product-category" id="new-product-category" />
+                <br> Description: <input type="text" name="product-description" id="new-product-description" />
+                <br>
+                <!-- how to save building_id to new product  <label type="text" name="product-name" id="new-product-name" /> -->
+                <input type="submit" value="Save Product" />
+            </form>
+        </div>
+
+        <div id="products-content">
+            <ul id="products-container">
+                <!--  will hold current products populated inside building container -->
+            </ul>
+
+            <div id="product-show">
+                <!-- Able to edit individual product -->
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="src/components/product.js"></script>
+    <script src="src/components/products.js"></script>
+    <script src="src/components/app.js"></script>
+    <script src="src/adapters/ProductsAdapter.js"></script>
+    <script src="src/index.js"></script>
+
+</body>
+
+</html>
